@@ -17,12 +17,16 @@ contract TodoList {
     uint[] private todoIds;
     mapping(uint => Todo) private allTodos;
 
+    event TodoAdded(uint id, string content);
+
     function addTodo(string memory _content) public {
         uint id = todoIds.length + 1;
 
         Todo memory todo = Todo({ id: id, content: _content, status: Status.Pending });
         allTodos[id] = todo;
         todoIds.push(id);
+
+        emit TodoAdded(id, _content);
     }
 
     function updateStatus(uint _id, Status _status) public{
